@@ -15,3 +15,17 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     `/etc/hosts` 에서 IPv6의 주소를 사용하지 않도록 주석처리
 
     `postfix check` 명령어로 오류를 확인할 수 있다.
+
+- NFS Troubleshooting
+
+    NFS 란 Networking File System의 약자로 네트워크를 이용하여 mount 하는 파일시스템을 이야기 한다.
+
+    `systemctl status nfs-server` 명령어로 nfs 서버가 작동중인지 확인
+
+    서버의 `/etc/exports` 파일에 공유할 폴더를 설정
+
+    Client에서 `showmount -e [ip_addr]` 명령어로 해당 ip와 공유하고 있는 디렉토리 확인
+
+    `mount -t nfs server_ip:dir client_dir` 로 nfs 마운트
+
+    `mount | grep nfs` 명령어로 마운트 되었는지 확인
