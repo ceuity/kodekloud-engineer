@@ -29,3 +29,11 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     `mount -t nfs server_ip:dir client_dir` 로 nfs 마운트
 
     `mount | grep nfs` 명령어로 마운트 되었는지 확인
+  
+- Linux Collaborative Directories
+
+    사용자의 그룹과 권한을 바꾸는 문제
+
+    `chmod` 와 `chgrp` 을 이용해서 권한과 그룹을 바꿔준다.
+
+    하위 폴더까지 해당 속성을 적용할 경우엔 `-R` flag를 사용한다.
