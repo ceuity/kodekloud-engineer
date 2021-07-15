@@ -37,3 +37,9 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     `chmod` 와 `chgrp` 을 이용해서 권한과 그룹을 바꿔준다.
 
     하위 폴더까지 해당 속성을 적용할 경우엔 `-R` flag를 사용한다.
+    
+- Create a group
+
+    각 앱서버에 새로운 그룹을 만들고 유저를 추가하는 문제
+
+    `groupadd` 명령어로 그룹을 추가한 다음 `adduser [username] -G [groupname]` 명령어로 유저를 해당 그룹에 추가할 수 있다.
