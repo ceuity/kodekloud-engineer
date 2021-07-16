@@ -43,3 +43,11 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     각 앱서버에 새로운 그룹을 만들고 유저를 추가하는 문제
 
     `groupadd` 명령어로 그룹을 추가한 다음 `adduser [username] -G [groupname]` 명령어로 유저를 해당 그룹에 추가할 수 있다.
+    
+- Linux SSH Authentication
+
+    jump server에서 각 App Server에 ssh 인증 없이 접속할 수 있도록 하는 문제
+
+    `ssh-keygen` 명령어로 ssh key를 생성한다.
+
+    `ssh-copy-id username@host`   명령어로 해당 App Server에 ssh 공개키를 복사하면 ssh 인증 없이 접속할 수 있다.
