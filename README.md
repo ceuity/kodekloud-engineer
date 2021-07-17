@@ -51,3 +51,11 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     `ssh-keygen` 명령어로 ssh key를 생성한다.
 
     `ssh-copy-id username@host`   명령어로 해당 App Server에 ssh 공개키를 복사하면 ssh 인증 없이 접속할 수 있다.
+    
+- Create a CronJob
+
+    CronJob을 만드는 문제
+
+    `yum install cronie` 명령어로 Cron을 설치한 후, `crond` 서비스를 실행시킨다.
+
+    `crontab -e` 명령어로 CronJob을 생성한다.
