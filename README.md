@@ -59,3 +59,9 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     `yum install cronie` 명령어로 Cron을 설치한 후, `crond` 서비스를 실행시킨다.
 
     `crontab -e` 명령어로 CronJob을 생성한다.
+    
+- DNS Troubleshooting
+
+    앱서버의 DNS가 제대로 작동하지 않는 문제
+
+    `/etc/resolv.conf` 에 구글의 기본 DNS 서버인 `8.8.8.8` 을 추가한다.
