@@ -65,3 +65,9 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     앱서버의 DNS가 제대로 작동하지 않는 문제
 
     `/etc/resolv.conf` 에 구글의 기본 DNS 서버인 `8.8.8.8` 을 추가한다.
+    
+- Linux User Expiry
+
+    특정 기간까지만 유효한 유저를 생성하는 문제
+
+    `useradd -e YYYY-MM-DD user_name` 명령어로 유저를 생성한 후, `chage -l user_name` 명령어로 유저의 정보를 확인할 수 있다.
