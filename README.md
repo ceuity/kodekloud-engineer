@@ -71,3 +71,13 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     특정 기간까지만 유효한 유저를 생성하는 문제
 
     `useradd -e YYYY-MM-DD user_name` 명령어로 유저를 생성한 후, `chage -l user_name` 명령어로 유저의 정보를 확인할 수 있다.
+    
+- Linux Banner
+
+    리눅스 로그인 시 배너를 띄우게 하는 문제
+
+    `/etc/motd` 파일은 유저가 로그인하거나 ssh를 통해 접속했을 때 해당 파일의 내용을 출력해준다.
+
+    jump server에서 `scp` 명령어를 이용해 배너 파일을 각 서버에 복사한 후, sudo 권한을 얻어 해당 위치에 복사한다.
+
+    만약 `scp`가 작동하지 않을 경우에는 `openssh-clients`를 설치하면 된다.
