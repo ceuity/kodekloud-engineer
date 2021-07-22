@@ -81,3 +81,9 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     jump server에서 `scp` 명령어를 이용해 배너 파일을 각 서버에 복사한 후, sudo 권한을 얻어 해당 위치에 복사한다.
 
     만약 `scp`가 작동하지 않을 경우에는 `openssh-clients`를 설치하면 된다.
+    
+- Linux Services
+
+    각 앱서버에 특정 패키지를 설치한 후 부팅 시 마다 실행되도록 하는 문제
+
+    `yum` 을 이용하여 해당 패키지를 설치한 후, `systemctl enable service_name`을 이용하여 부팅 시 마다 시작될 수 있도록 한다.
