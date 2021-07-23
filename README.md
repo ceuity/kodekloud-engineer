@@ -87,3 +87,13 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     각 앱서버에 특정 패키지를 설치한 후 부팅 시 마다 실행되도록 하는 문제
 
     `yum` 을 이용하여 해당 패키지를 설치한 후, `systemctl enable service_name`을 이용하여 부팅 시 마다 시작될 수 있도록 한다.
+    
+- Linux Firewalld Rules
+
+    방화벽에서 특정 포트로 통신할 수 있도록 해당 규칙을 추가하는 문제
+
+    설정 파일 : `/etc/firewalld/firewalld.conf` DefaultZone public 설정
+
+    포트 추가 : `firewall-cmd --permanent --zone=public --add-port=8083/tcp`
+
+    [https://www.lesstif.com/system-admin/rhel-centos-firewall-22053128.html](https://www.lesstif.com/system-admin/rhel-centos-firewall-22053128.html)
