@@ -97,3 +97,11 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     포트 추가 : `firewall-cmd --permanent --zone=public --add-port=8083/tcp`
 
     [https://www.lesstif.com/system-admin/rhel-centos-firewall-22053128.html](https://www.lesstif.com/system-admin/rhel-centos-firewall-22053128.html)
+    
+- Linux Run Levels
+
+    runlevel을 multi-user(CLI)에서 graphical(GUI)로 바꾸는 문제
+
+    `systemctl get-default` 명령어로 runlevel을 확인할 수 있다.
+
+    `systemctl set-default graphical.target` 명령어로 runlevel을 변경할 수 있다.
