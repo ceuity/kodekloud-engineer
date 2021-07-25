@@ -105,3 +105,16 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     `systemctl get-default` 명령어로 runlevel을 확인할 수 있다.
 
     `systemctl set-default graphical.target` 명령어로 runlevel을 변경할 수 있다.
+
+- Apache Troubleshooting
+
+    각 앱서버에 있는 Apache의 문제점들을 해결하는 문제
+
+    세 개의 서버 모두 설정 파일이 잘못되어 있어서 해당 오류를 수정하고 `httpd daemon`을 다시 실행시켜준다.
+
+    확인해야 할 사항은 다음과 같다.
+
+    1. 포트
+    2. 서버 이름
+    3. Root Directory 경로
+    4. html Directory 경로
