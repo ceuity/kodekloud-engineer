@@ -118,3 +118,9 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     2. 서버 이름
     3. Root Directory 경로
     4. html Directory 경로
+
+- Linux String Substitute
+
+    특정 파일에 있는 단어를 전부 수정하는 문제
+
+    `sed -i 's/source/dest/g' file` 명령어를 이용하여 해당 파일의 source 단어를 dest로 변경한다.
