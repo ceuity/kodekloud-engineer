@@ -124,3 +124,13 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     특정 파일에 있는 단어를 전부 수정하는 문제
 
     `sed -i 's/source/dest/g' file` 명령어를 이용하여 해당 파일의 source 단어를 dest로 변경한다.
+
+- Linux String Substitute (sed)
+
+    특정 파일에 있는 단어를 포함한 행을 제거하거나 단어를 전부 수정하는 문제
+
+    `sed '/source/d' input_file > output_file` 명령어를 이용하여 source 단어가 포함된 모든 행을 제거한 결과를 파일로 저장할 수 있다. 특정 단어를 정확하게 지정하고 싶을 경우 `sed '/\<source\>/d'` 를 사용한다.
+
+    `sed 's/\<source\>/dest/g' input_file > output_file` 명령어를 이용하여 source 단어를 dest 단어로 바꿀 수 있다.
+
+    참고 : [https://jhnyang.tistory.com/287](https://jhnyang.tistory.com/287)
