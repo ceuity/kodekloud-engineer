@@ -134,3 +134,15 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     `sed 's/\<source\>/dest/g' input_file > output_file` 명령어를 이용하여 source 단어를 dest 단어로 바꿀 수 있다.
 
     참고 : [https://jhnyang.tistory.com/287](https://jhnyang.tistory.com/287)
+    
+- MariaDB Troubleshooting
+
+    MariaDB가 초기화되지 않아 발생한 문제를 해결하는 문제
+
+    데이터베이스 서버에 접속하여 `systemctl status mariadb` 명령어로 우선 DB가 정상적으로 실행중인지 확인한다.
+
+    `systemctl start mariadb` 명령어로 DB를 실행시키면 에러가 발생하여 실행되지 않는다.
+
+    `systemctl status mariadb -l` 명령어로 에러를 확인해본 결과 `/var/lib/mysql` 폴더가 제대로 초기화되지 않아서 발생하는 문제이다. 따라서 `/var/lib/mysql` 폴더를 생성한 후 권한을 부여하거나, `mysqld` 폴더를 `mysql`로 변경한다.
+
+    수정 후 `systemctl start mariadb` 명령어를 입력하면 정상적으로 작동하는 것을 확인할 수 있다.
