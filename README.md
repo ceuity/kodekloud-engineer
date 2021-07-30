@@ -146,3 +146,11 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     `systemctl status mariadb -l` 명령어로 에러를 확인해본 결과 `/var/lib/mysql` 폴더가 제대로 초기화되지 않아서 발생하는 문제이다. 따라서 `/var/lib/mysql` 폴더를 생성한 후 권한을 부여하거나, `mysqld` 폴더를 `mysql`로 변경한다.
 
     수정 후 `systemctl start mariadb` 명령어를 입력하면 정상적으로 작동하는 것을 확인할 수 있다.
+    
+- Disable root login
+
+    root 계정을 이용한 SSH 접속을 막는 문제
+
+    SSHD 설정 파일을 수정하여 root 계정을 이용한 SSH 접속을 막을 수 있다.
+
+    `/etc/ssh/sshd_config` 파일에 `PermitRootLogin no` 를 추가하거나 주석을 해제한 후 `systemctl restart sshd` 명령어로 ssh 서비스를 재시작하면 된다.
