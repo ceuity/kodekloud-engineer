@@ -154,3 +154,67 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     SSHD 설정 파일을 수정하여 root 계정을 이용한 SSH 접속을 막을 수 있다.
 
     `/etc/ssh/sshd_config` 파일에 `PermitRootLogin no` 를 추가하거나 주석을 해제한 후 `systemctl restart sshd` 명령어로 ssh 서비스를 재시작하면 된다.
+    
+- Setup SSL for Nginx
+
+    서버에 Nginx 를 설치하고 SSL 설정하는 문제
+
+    1. nginx 설치
+
+        기본 yum repo에는 nginx 패키지가 없기 때문에 `yum install epel-release` 명령어로 EPEL Repository를 추가하거나  `/etc/yum.repos.d` 폴더에 repo 파일로 추가한다.
+
+        `yum install nginx` 명령어로 nginx를 설치한다.
+
+        `systemctl start nginx` 명령어로 서비스를 실행한다.
+
+        `/usr/share/nginx/html` 폴더에 `index.html` 파일을 만든다.
+
+    2. 방화벽 설정
+
+        `yum install firewalld` 명령어로 방화벽을 설치한다.
+
+        `firewall-cmd` 명령어로 http와 https 규칙을 추가한다.
+
+        ```bash
+        # firewall-cmd --zone=public --permanent --add-service=http
+        # firewall-cmd --zone=public --permanent --add-service=https
+        # firewall-cmd --reload
+        ```
+
+        방화벽 설정을 완료했다면 `systemctl restart nginx` 명령어로 nginx를 재시작하여 curl 등을 이용하여 http로 접속이 되는지 확인한다.
+
+    3. SSL 설정
+
+        `/etc/nginx/nginx.conf` 파일을 수정한다.
+
+        ```bash
+        # /etc/nginx/nginx.conf
+
+        # add into "server" section
+            server {
+                listen       80 default_server;
+                listen       [::]:80 default_server;
+                listen       443 ssl;
+                server_name  www.srv.world;
+                root         /usr/share/nginx/html;
+
+                ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+                ssl_prefer_server_ciphers on;
+                ssl_ciphers ECDHE+RSAGCM:ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:!aNULL!eNull:!EXPORT:!DES:!3DES:!MD5:!DSS;
+                ssl_certificate      /etc/pki/tls/certs/server.crt;
+                ssl_certificate_key  /etc/pki/tls/certs/server.key;
+        ```
+
+        `ssl_certificate` 와 `ssl_certificate_key` 는 미리 주어진 키 경로를 입력하거나 해당 폴더로 복사한다.
+
+        설정 완료 후 nginx를 재시작하여 SSL이 제대로 적용되었는지 확인한다.
+
+        `curl -Ik https://<app-server>/`
+
+        200 응답이 온다면 성공!
+
+    - 참고자료
+
+        [https://www.tecmint.com/install-nginx-on-centos-7/](https://www.tecmint.com/install-nginx-on-centos-7/)
+
+        [https://www.server-world.info/en/note?os=CentOS_7&p=nginx&f=4](https://www.server-world.info/en/note?os=CentOS_7&p=nginx&f=4)
