@@ -218,3 +218,35 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
         [https://www.tecmint.com/install-nginx-on-centos-7/](https://www.tecmint.com/install-nginx-on-centos-7/)
 
         [https://www.server-world.info/en/note?os=CentOS_7&p=nginx&f=4](https://www.server-world.info/en/note?os=CentOS_7&p=nginx&f=4)
+
+- Configure Local Yum repos
+
+    yum에 Local Repository를 추가하는 문제
+
+    yum 공식 Repo에 rpm 패키지가 없는 경우 다른 Repo를 추가하거나 local Repository를 구축해서 사용할 수 있다.
+
+    yum의 Repository는 기본적으로 `/etc/yum.repos.d` 폴더에 존재한다.
+
+    다음과 같이 `repo` 확장자를 가지는 파일을 만든다.
+
+    ```
+    # vi /etc/yum.repos.d/localyum.repo
+
+    [localyum]
+    name=localyum
+    baseurl=file:///your_rpm_packages/folder
+    enabled=1
+    gpgcheck=0
+    ```
+
+    해당 과제에서는 이미 repo 설정 등에 관한 파일들이 있었기 때문에 `createrepo` 명령어를 사용하지 않았다.
+
+    설정이 완료되면 `yum repolist` 명령어로 제대로 설정이 되었는지 확인한 후 `samba` 패키지를 설치하면 끝
+
+    - 참고자료
+
+        [https://letitkang.tistory.com/119](https://letitkang.tistory.com/119)
+
+        [https://linuxstory1.tistory.com/entry/편리하게-패키지를-설치하는-YUM](https://linuxstory1.tistory.com/entry/%ED%8E%B8%EB%A6%AC%ED%95%98%EA%B2%8C-%ED%8C%A8%ED%82%A4%EC%A7%80%EB%A5%BC-%EC%84%A4%EC%B9%98%ED%95%98%EB%8A%94-YUM)
+
+        [https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-managing_yum_repositories](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-managing_yum_repositories)
