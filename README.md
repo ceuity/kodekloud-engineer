@@ -250,3 +250,13 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
         [https://linuxstory1.tistory.com/entry/편리하게-패키지를-설치하는-YUM](https://linuxstory1.tistory.com/entry/%ED%8E%B8%EB%A6%AC%ED%95%98%EA%B2%8C-%ED%8C%A8%ED%82%A4%EC%A7%80%EB%A5%BC-%EC%84%A4%EC%B9%98%ED%95%98%EB%8A%94-YUM)
 
         [https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-managing_yum_repositories](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-managing_yum_repositories)
+        
+- Linux LogRotate
+
+    LogRotate를 이용하여 Log를 관리하는 문제
+
+    처음에 `/etc/logrotate.d/` 폴더에 보면 여러가지 application 들의 logrotate 설정 파일들이 보일 것이다. 이 문제에서는 `haproxy` 라는 package를 설치하여 특정 기간의 로그를 저장하도록 설정하는 것이다.
+
+    `/etc/logrotate.d/`에 존재하는 파일은 어느 기간 동안 얼만큼의 간격으로 로그를 저장할 것인지 설정할 수 있다.
+
+    모든 app server에 해당 package를 설치한 후 logrotate 설정을 하면 끝
