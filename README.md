@@ -260,3 +260,18 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     `/etc/logrotate.d/`에 존재하는 파일은 어느 기간 동안 얼만큼의 간격으로 로그를 저장할 것인지 설정할 수 있다.
 
     모든 app server에 해당 package를 설치한 후 logrotate 설정을 하면 끝
+    
+- Add Response Headers in Apache
+
+    Apache 설정에서 헤더를 추가하여 XSS 공격 방어 등 여러가지 기능을 추가하는 문제
+
+    `yum install -y httpd` 명령어로 Apache를 설치한 후 `/etc/httpd/conf/httpd.conf` 파일을 수정하여 각종 헤더를 추가한다. 주어진 조건은 다음과 같다.
+
+    ```html
+    Header always set X-Frame-Options "sameorigin"
+
+    <IfModule mod_headers.c>
+        Header set X-Content-Type-Options nosniff
+        Header set X-XSS-Protection "1; mode=block"
+    </IfModule>
+    ```
