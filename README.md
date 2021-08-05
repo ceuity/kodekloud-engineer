@@ -265,13 +265,14 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
 
     Apache 설정에서 헤더를 추가하여 XSS 공격 방어 등 여러가지 기능을 추가하는 문제
 
-    `yum install -y httpd` 명령어로 Apache를 설치한 후 `/etc/httpd/conf/httpd.conf` 파일을 수정하여 각종 헤더를 추가한다. 주어진 조건은 다음과 같다.
+    `yum install -y httpd` 명령어로 Apache를 설치한 후 `/etc/httpd/conf/httpd.conf` 파일을 수정하여 port 변경 및 각종 헤더를 추가한다. 주어진 조건은 다음과 같다.
 
     ```html
-    Header always set X-Frame-Options "sameorigin"
-
-    <IfModule mod_headers.c>
-        Header set X-Content-Type-Options nosniff
-        Header set X-XSS-Protection "1; mode=block"
-    </IfModule>
+    Header set X-XSS-Protection "1; mode=block"
+    Header always append X-Frame-Options SAMEORIGIN
+    Header set X-Content-Type-Options nosniff
     ```
+
+    테스트를 위하여 `/var/www/html` 폴더에 간단한 index 파일을 생성한다.
+
+    `curl -i http://server:port` 명령어로 헤더가 잘 설정되었는지 확인할 수 있다.
