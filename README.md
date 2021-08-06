@@ -276,3 +276,16 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     테스트를 위하여 `/var/www/html` 폴더에 간단한 index 파일을 생성한다.
 
     `curl -i http://server:port` 명령어로 헤더가 잘 설정되었는지 확인할 수 있다.
+    
+- Web Server Security
+
+    Apache에서 헤더에 버전이 노출되는 문제와 Directory listing을 방지하는 문제
+
+    - 헤더에 버전이 노출되는 문제는 `/etc/httpd/conf/httpd.conf` 파일에 다음과 같은 설정을 추가한다.
+
+        ```bash
+        ServerTokens Prod
+        ServerSignature Off
+        ```
+
+    - Directory listing 방지는 마찬가지로 설정 파일에서 directory 관련 부분에서 `Options` 항목에서 `Indexes` 항목을 지워준다. ex) `Options FollowSymLinks`
