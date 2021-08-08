@@ -289,3 +289,42 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
         ```
 
     - Directory listing 방지는 마찬가지로 설정 파일에서 directory 관련 부분에서 `Options` 항목에서 `Indexes` 항목을 지워준다. ex) `Options FollowSymLinks`
+
+- Apache Redirects
+
+    Apache에서 Redirction을 설정하는 문제
+
+    Apache에서는 Redirect를 이용한 방법과 Rewrite module을 이용한 두 가지 방법으로 Redirection을 설정할 수 있다. 여기서는 Redirect를 이용한 방법으로 문제를 해결하였다.
+
+    - Redirect
+
+        호스트 설정 파일에 다음과 같은 VirtualHost Block을 추가하여 Redirection을 설정할 수 있다. 이 문제에서는 `/etc/httpd/conf.d/main.conf` 파일로 따로 설정해주었다.
+
+        ```
+        <VirtualHost *:6100>
+        	ServerName stapp01.stratos.xfusioncorp.com
+        	Redirect 301 / http://www.stapp01.stratos.xfusioncorp.com:6100/
+        </VirtualHost>
+
+        <VirtualHost *:6100>
+        	ServerName www.stapp01.stratos.xfusioncorp.com:6100/blog/
+        	Redirect 302 /blog/ http://www.stapp01.stratos.xfusioncorp.com:6100/news/
+        </VirtualHost>
+        ```
+
+    - Rewrite module
+
+        위와 마찬가지로 VirtualHost Block에서 다음과 같이 설정하여 Redirection을 설정할 수 있다.
+
+        ```
+        <VirtualHost *:6100>
+        	RewriteEngine on
+        	RewriteBase /
+        	rewritecond %{http_host} ^domain.com [nc]
+        	rewriterule ^(.*)$ http://www.domain.com/$1 [r=301,nc]
+        </VirtualHost>
+        ```
+
+    HTTP Response Status Code에 따라 해당 페이지가 영구적으로 이동되었는지, 임시적으로 이동되었는지 구분할 수 있다.
+
+    응답 코드는 영구적으로 이동했을 경우 301, 임시적으로 이동했을 경우 302를 사용한다.
