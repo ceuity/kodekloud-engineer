@@ -328,3 +328,13 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     HTTP Response Status Code에 따라 해당 페이지가 영구적으로 이동되었는지, 임시적으로 이동되었는지 구분할 수 있다.
 
     응답 코드는 영구적으로 이동했을 경우 301, 임시적으로 이동했을 경우 302를 사용한다.
+    
+- Linux Find Command
+
+    특정 폴더에서 특정 확장자만 가진 파일만 복사하는 문제. 파일의 디렉토리 구조를 그대로 유지해야 한다.
+
+    ```bash
+    find /var/www/html/ecommerce -type f -name "*.js" -exec cp --parents {} /ecommerce \;
+    ```
+
+    `find` 의 `-exec` 옵션을 사용하면 `find`의 output을 input으로 넘길 수 있다. 계층 구조를 유지해야 하기 때문에 `cp` 의 `--parents` flag를 사용했고, `find` 의 결과는 `{}`로 넘겨져서 한 줄씩 실행된다. `\;` 는 `-exec` 옵션의 끝을 나타낸다.
