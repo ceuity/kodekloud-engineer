@@ -338,3 +338,39 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     ```
 
     `find` 의 `-exec` 옵션을 사용하면 `find`의 output을 input으로 넘길 수 있다. 계층 구조를 유지해야 하기 때문에 `cp` 의 `--parents` flag를 사용했고, `find` 의 결과는 `{}`로 넘겨져서 한 줄씩 실행된다. `\;` 는 `-exec` 옵션의 끝을 나타낸다.
+    
+- Linux GPG Command
+
+    GnuPG 를 이용하여 암호화/복호화에 대해 배우는 문제
+
+    이 문제에서는 공개 키와 비밀 키가 주어지고 해당 키를 이용하여 주어진 파일을 암호화/복호화 하는 문제이다.
+
+    - 주어진 key file import
+
+        ```bash
+        gpg --import private.asc
+        ```
+
+    - key list 조회
+
+        ```bash
+        gpg --list-keys # 공개 키 조회
+        gpg --list-secret-keys # 비밀 키 조회
+        ```
+
+    - Encrypt
+
+        ```bash
+        gpg --encrypt -r kodekloud@kodekloud.com --armor < encrypt_me.txt -o encrypted_me.asc
+        ```
+
+        - `-r` : `--recipient` 어떤 User의 key를 이용하여 Encrypt 할 것인지
+        - `--armor` : 아스키코드로 출력. 해당 옵션을 사용하지 않을 시 Binary file로 생성
+        - `-o` : 출력 파일명
+    - Decrypt
+
+        ```bash
+        gpg --decrypt decrypt_me.asc > decrypted_me.txt
+        ```
+
+    암호화된 파일을 복호화한 후 cat 명령어를 이용하여 확인해보면 정상적으로 복호화 된 것을 확인할 수 있다.
