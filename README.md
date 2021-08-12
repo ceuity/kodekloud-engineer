@@ -374,3 +374,18 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
         ```
 
     암호화된 파일을 복호화한 후 cat 명령어를 이용하여 확인해보면 정상적으로 복호화 된 것을 확인할 수 있다.
+    
+- Linux Bash Scripts
+
+    Shell Script 를 이용하여 특정 작업을 자동화하는 문제
+
+    App Server에서 zip 을 이용하여 백업 파일을 생성하고, 해당 파일을 scp를 이용해 Backup Server로 복사할 수 있는 스크립트를 만들면 된다.
+
+    ```bash
+    #!/bin/bash
+
+    zip -r /backup/xfusioncorp_beta.zip /var/www/html/beta
+    scp /backup/xfusioncorpt_beta.zip clint@stbkp01:/backup
+    ```
+
+    scp 명령어를 사용할 때 ssh 인증이 필요하지 않도록 미리 ssh key를 copy해두어야 한다.
