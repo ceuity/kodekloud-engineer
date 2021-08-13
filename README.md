@@ -374,6 +374,8 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
         ```
 
     암호화된 파일을 복호화한 후 cat 명령어를 이용하여 확인해보면 정상적으로 복호화 된 것을 확인할 수 있다.
+
+    - 참고자료 : [https://johngrib.github.io/wiki/gpg/](https://johngrib.github.io/wiki/gpg/)
     
 - Linux Bash Scripts
 
@@ -385,7 +387,15 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     #!/bin/bash
 
     zip -r /backup/xfusioncorp_beta.zip /var/www/html/beta
-    scp /backup/xfusioncorpt_beta.zip clint@stbkp01:/backup
+    scp /backup/xfusioncorp_beta.zip clint@stbkp01:/backup
     ```
 
-    scp 명령어를 사용할 때 ssh 인증이 필요하지 않도록 미리 ssh key를 copy해두어야 한다.
+    scp 명령어를 사용할 때 ssh 인증이 필요하지 않도록 미리 `ssh-copy-id`를 이용하여 ssh key를 copy해두어야 한다.
+
+- Install Package
+
+    모든 앱서버에 `epel-release` package를 설치하는 문제
+
+    EPEL(Extra Packages for Enterprise Linux)은 Fedora Project에서 제공되는 저장소로 각종 패키지의 최신 버전을 제공하는 community 기반의 저장소로, RHEL의 패키지 정책은 보수적이고 안정성 위주라 패키지 업데이트가 잘 되지 않는다.
+
+    이전에는 rpm 패키지를 다운로드 받아서 설치해야 했던 것으로 보이나, 지금은 `yum install epel-release` 명령어로 바로 다운로드 가능하며, `yum repolist` 명령어로 정상적으로 설치되었는지 확인할 수 있다.
