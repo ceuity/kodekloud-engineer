@@ -399,3 +399,35 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     EPEL(Extra Packages for Enterprise Linux)은 Fedora Project에서 제공되는 저장소로 각종 패키지의 최신 버전을 제공하는 community 기반의 저장소로, RHEL의 패키지 정책은 보수적이고 안정성 위주라 패키지 업데이트가 잘 되지 않는다.
 
     이전에는 rpm 패키지를 다운로드 받아서 설치해야 했던 것으로 보이나, 지금은 `yum install epel-release` 명령어로 바로 다운로드 가능하며, `yum repolist` 명령어로 정상적으로 설치되었는지 확인할 수 있다.
+    
+- Linux Configure sudo
+
+    특정 유저에게 sudo 권한을 주는 문제
+
+    CentOS에서 유저에서 sudo 권한을 부여하는 방법은 두 가지가 있다.
+
+    1. `wheel` 그룹에 사용자 추가
+
+        `usermod -aG wheel {username}`
+
+        `sudo whoami` : 이 명령은 암호를 입력하라는 메세지를 표시하며, 암호가 정확하고 사용자가 `wheel` 그룹에 있으면 `root` 가 터미널에 출력된다.
+
+    2. `Sudoers` 파일에 사용자 추가
+
+        sudo 권한을 가진 사용자는 `/etc/sudoers` 파일에서 구성된다. 따라서 sudoers 파일을 수정하거나 `/etc/sudoers.d` 디렉토리에 새 구성 파일을 추가하여 sudo 사용자를 추가할 수 있다.
+
+        `visudo` 명령을 사용하여 `/etc/sudoers` 파일을 편집한다. `visudo` 명령어는 저장하기 전에 파일의 구문 오류를 확인한다.
+
+        `/etc/sudoers` 파일의 가장 마지막 줄에 다음과 같이 추가한다.
+
+        ```bash
+        username ALL=(ALL) NOPASSWD:ALL
+        ```
+
+        암호 없이 특정 명령어만 수행하게 할 경우에는 다음과 같이 설정한다.
+
+        ```bash
+        username ALL=(ALL) NOPASSWD:/bin/mkdir,/bin/rmdir
+        ```
+
+    - 참고자료 : [https://www.delftstack.com/ko/howto/linux/how-to-add-sudo-users-in-centos/](https://www.delftstack.com/ko/howto/linux/how-to-add-sudo-users-in-centos/)
