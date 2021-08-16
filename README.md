@@ -431,3 +431,27 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
         ```
 
     - 참고자료 : [https://www.delftstack.com/ko/howto/linux/how-to-add-sudo-users-in-centos/](https://www.delftstack.com/ko/howto/linux/how-to-add-sudo-users-in-centos/)
+
+- Application Security
+
+    `iptables` 를 이용하여 특정 포트를 허용/차단하도록 설정하는 문제
+
+    Apache는 3000포트로, Nginx는 8094포트로 연결되어 있을 때, 3000번 포트는 막고 8094번 포트는 열어주는 것이 목적이다.
+
+    `iptables` 명령어를 이용하여 규칙을 설정할 수 있다.
+
+    - `iptables -A INPUT -p tcp --dport 8094 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT`
+        - `-A` : 맨 아래에 규칙을 추가
+        - `-p` : Protocol
+        - `-m state --state` : 패킷의 상태와 목적에 따라 제어
+            - NEW : 새로 접속을 시도하는 패킷
+            - ESTABLISHED : 접속을 한 상태의 패킷
+            - INVALIED : 유효하지 않은 패킷
+            - RELATED : 접속에 연관성을 가지는 패킷 ex) FTP 접속 패킷, ICMP 에러 메세지
+    - `iptables -A INPUT -p tcp --dport 3000 -m conntrack --ctstate NEW -j REJECT`
+
+    설정 후 `iptables -L --line-numbers` 명령어로 규칙을 확인할 수 있다. 확인 결과, 이 문제에서는 5번에 reject 되어있는 규칙이 있어서 해당 규칙을 수정해줄 필요가 있다.
+
+    `iptables -R INPUT 5 -p icmp -j REJECT` 해당 규칙을 설정하고 나면 `service iptables save` 명령어로 규칙을 저장한다.
+
+    `telnet` 을 이용하여 접속을 시도해보면 3000 포트는 닫혀있고 8094 포트는 열려있는 것을 확인할 수 있다.
