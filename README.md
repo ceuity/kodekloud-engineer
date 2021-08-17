@@ -455,3 +455,141 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     `iptables -R INPUT 5 -p icmp -j REJECT` 해당 규칙을 설정하고 나면 `service iptables save` 명령어로 규칙을 저장한다.
 
     `telnet` 을 이용하여 접속을 시도해보면 3000 포트는 닫혀있고 8094 포트는 열려있는 것을 확인할 수 있다.
+    
+- Linux Postfix Mail Server
+
+    `postfix` 와 `dovecot` 을 이용하여 메일서버를 설정하는 문제
+
+    - `postfix` : 메일을 주고받는 서버
+    - `dovecot` : 메일을 관리하는 서버
+    1. `postfix` 설치 및 설정
+
+        `yum install -y postfix`
+
+        ```bash
+        # /etc/postfix/main.cf
+
+        # 76 lines
+        myhostname = stmail01.stratos.xfusioncorp.com
+
+        # 83 lines
+        mydomain = stratos.xfusioncorp.com
+
+        # 99 lines
+        myorigin = $mydomain
+
+        # 113 lines
+        inet_iterfaces = all
+
+        # 116 lines comment
+
+        # 165 lines uncomment
+
+        # 264 lines
+        mynetworks = 172.16.238.0/24, 127.0.0.0/8
+
+        # 419 lines
+        home_mailbox = Maildir/
+        ```
+
+        `systemctl start postfix`
+
+        `systemctl status postfix`
+
+    2. 유저 추가
+
+        `useradd {username}`
+
+        `passwd {password}`
+
+    3. 메일서버 작동 테스트
+
+        ```bash
+        telnet stmail01 25
+        220 stmail01.stratos.xfusioncorp.com ESMTP Postfix
+        EHLO localhost
+        250-stmail01.stratos.xfusioncorp.com
+        250-PIPELINING
+        250-SIZE 10240000
+        250-VRFY
+        250-ETRN
+        250-ENHANCEDSTATUSCODES
+        250-8BITMIME
+        250 DSN
+        mail from:username@stratos.xfusioncorp.com
+        250 2.1.0 Ok
+        rcpt to:username@stratos.xfusioncorp.com
+        250 2.1.5 Ok
+        DATA
+        354 End data with <CR><LF>.<CR><LF>
+        test mail
+        .
+        250 2.0.0 Ok: queued as DBD7E11F7418
+        quit
+        221 2.0.0 Bye
+        ```
+
+        메일은 해당 계정으로 로그인하여 위에서 설정한 `Maildir` 폴더의 `new` 폴더에 있을 것이다.
+
+    4. `devocat` 설치 및 설정
+
+        ```bash
+        # /etc/dovecot/dovecot.conf
+
+        # 24 lines uncomment
+        ```
+
+        ```bash
+        # /etc/dovecot/conf.d/10-mail.conf
+
+        # 24 lines uncomment
+        ```
+
+        ```bash
+        # /etc/dovecot/conf.d/10-auth.conf
+
+        # 10 lines uncomment
+
+        # 100 lines
+        auth_mechanisms = plain login
+        ```
+
+        ```bash
+        # /etc/dovecot/conf.d/10-master.conf
+
+        # 89-92 lines
+        unix_listener auth-userdb {
+          #mode = 0666
+          user = postfix
+          group = postfix
+        }
+        ```
+
+        `systemctl start dovecot`
+
+        `systemctl status dovecot`
+
+    5. `dovecot` 작동 테스트
+
+        ```bash
+        telnet stmail01 110
+        +OK Dovecot ready.
+        user {username}
+        +OK
+        pass {password}
+        +OK Logged in.
+        retr 1
+        +OK 513 octets
+        """
+        mail
+        """
+        quit
+        ```
+
+    6. 열려있는 포트 확인
+
+        `ss -tulnp`
+
+    검색해보니 `postfix` 와 `dovecot` 을 이용해서 서버를 구축하는 내용들이 많이 나와서 해당 방법을 이용하여 시도해보았으나 실패하여 다음 영상을 보고 해결했다.
+
+    참고자료 : [https://www.youtube.com/watch?v=kdcUfw5vJKY&t=4s](https://www.youtube.com/watch?v=kdcUfw5vJKY&t=4s)
