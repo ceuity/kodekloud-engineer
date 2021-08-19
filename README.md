@@ -593,3 +593,55 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     검색해보니 `postfix` 와 `dovecot` 을 이용해서 서버를 구축하는 내용들이 많이 나와서 해당 방법을 이용하여 시도해보았으나 실패하여 다음 영상을 보고 해결했다.
 
     참고자료 : [https://www.youtube.com/watch?v=kdcUfw5vJKY&t=4s](https://www.youtube.com/watch?v=kdcUfw5vJKY&t=4s)
+    
+- Install and Configure PostgreSQL
+
+    PostgreSQL 을 설치하고 기본 설정을 하는 문제
+
+    - 해결해야 할 조건
+        - db 서버에 PostgreSQL 설치
+
+            ```bash
+            yum install postgresql-server postgresql-contrib
+            postgresql-setup initdb
+            systemctl enable postgresql && sudo systemctl start postgresql
+            systemctl status postgresql
+
+            sudo -u postgres psql postgres
+            ```
+
+            첫 로그인은 `postgres` 라는 유저로 로그인 하여 PostgreSQL에 접속한다.
+
+        - 패스워드가 있는 유저 생성
+
+            ```sql
+            CREATE USER kodekloud_aim WITH PASSWORD 'dCV3szSGNA';
+            ```
+
+        - 생성된 유저가 모든 권한을 가지고 있는 DB 생성
+
+            ```sql
+            CREATE DATABASE kodekloud_db8;
+            GRANT ALL PRIVILEGES ON DATABASE "kodekloud_db8" to kodekloud_aim;
+            ```
+
+        - [localhost](http://localhost) 에 DB 연결
+
+            `sudo vi /var/lib/pgsql/data/postgresql.conf` 파일 수정
+
+            Uncomment `listen_address=localhost`
+
+        - md5를 이용한 암호화
+
+            `sudo vi /var/lib/pgsql/data/pg_hba.conf` 파일 수정
+
+            ```bash
+            local all all md5
+            host all all 127.0.0.1/32 md5
+            ```
+
+        설정 완료 후 서비스 재시작하면 다음 명령어로 접속이 정상적으로 되는지 확인할 수 있다.
+
+        `psql -U kodekloud_aim -d kodekloud_db8 -h 127.0.0.1 -W`
+
+        `psql -U kodekloud_tim -d kodekloud_db8 -h localhost -W`
