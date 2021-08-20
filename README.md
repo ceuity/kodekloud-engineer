@@ -645,3 +645,31 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
         `psql -U kodekloud_aim -d kodekloud_db8 -h 127.0.0.1 -W`
 
         `psql -U kodekloud_tim -d kodekloud_db8 -h localhost -W`
+        
+- Install And Configure SFTP
+
+    sftp를 위한 계정을 만들고 설정하는 문제
+
+    CentOS에는 기본적으로 ssh와 같이 sftp도 설치되어 있기 때문에 별도로 설치할 필요가 없다.
+
+    1. 계정 생성
+        - `useradd -s /sbin/nologin -G ftp {username}`
+    2. 패스워드 변경
+        - `passwd {username}`
+        - `echo 'password' | passwd --stdin username`
+    3. chroot 적용 & Password authentication
+        - `/etc/sshd/sshd_config` 파일을 다음과 같이 수정한다.
+
+            ```bash
+            Subsystem	sftp	internal-sftp
+            Match User {username}
+            ChrootDirectory /var/www/nfsshare
+            ForceCommand internal-sftp
+            PasswordAuthentication yes
+            ```
+
+    4. 서비스 재시작
+
+        `systemctl restart sshd`
+
+    참고자료 : [https://zetawiki.com/wiki/SFTP만_되는_계정_생성](https://zetawiki.com/wiki/SFTP%EB%A7%8C_%EB%90%98%EB%8A%94_%EA%B3%84%EC%A0%95_%EC%83%9D%EC%84%B1)
