@@ -673,3 +673,29 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
         `systemctl restart sshd`
 
     참고자료 : [https://zetawiki.com/wiki/SFTP만_되는_계정_생성](https://zetawiki.com/wiki/SFTP%EB%A7%8C_%EB%90%98%EB%8A%94_%EA%B3%84%EC%A0%95_%EC%83%9D%EC%84%B1)
+    
+- Install and Configure Tomcat Server
+
+    Apache Tomcat을 설치하고 설정하는 문제
+
+    1. App Server에 Tomcat 설치
+
+        `yum install tomcat` 명령어로 Tomcat을 설치하면 `/usr/share/tomcat` 에 설치가 완료된다.
+
+    2. 포트 설정
+
+        `/usr/share/tomcat/conf/server.xml` 파일의 `<Connector port="6400"` 부분을 원하는 포트로 변경한다.
+
+    3. war 파일 이동
+
+         jump host에 있는 `ROOT.war` 파일을 앱서버로 복사한 후, Apache Tomcat을 설치하여 배포할 수 있도록 설정해야 한다. 따라서 `scp` 명령어를 이용해 먼저 앱서버로 해당 파일을 복사해준다.
+
+        `/usr/share/tomcat/webapps` 경로에 war 파일을 넣으면 해당 파일을 이용하여 해당 프로젝트를 배포할 수 있다. 파일 명이 곧 URL이 되지만, `ROOT.war` 로 할 경우에는 최상위 도메인으로 연결된다.
+
+    4. 서비스 실행
+
+        `systemctl enable tomcat`
+
+        `systemctl start tomcat`
+
+    참고자료 : [https://its-easy.tistory.com/4](https://its-easy.tistory.com/4)
