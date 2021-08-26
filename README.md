@@ -708,7 +708,7 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
 
     ```bash
     # install package
-    yum install -y iptables-service
+    yum install -y iptables-services
 
     # start service
     systemctl enable iptables
