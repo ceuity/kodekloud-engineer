@@ -699,3 +699,27 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
         `systemctl start tomcat`
 
     참고자료 : [https://its-easy.tistory.com/4](https://its-easy.tistory.com/4)
+
+- IPtables Installation And Configuration
+
+    `iptables`를 이용하여 네트워크 정책을 설정하는 문제
+
+    기존에는 외부에서 앱서버에 직접적으로 접근이 가능했으나, 설정을 통해 로드밸런서를 통하여 통신을 하게 만드려고 한다. 따라서 각 앱서버에서 로드밸런서의 IP 주소의 접근만 허용하고 나머지는 거부하도록 설정해야 한다.
+
+    ```bash
+    # install package
+    yum install -y iptables-service
+
+    # start service
+    systemctl enable iptables
+    systemctl start iptables
+
+    # rule setting
+    iptables -A INPUT -p tcp --destination-port 6300 -s 172.16.238.14 -j ACCEPT
+    iptables -A INPUT -p tcp --destination-port 6300 -j DROP
+
+    service iptables save
+    systemctl restart iptables
+    ```
+
+    위와 같이 설정한 후 해당 앱서버로 접근은 불가하지만 로드밸런서를 통한 접근은 가능한 것을 확인할 수 있다.
