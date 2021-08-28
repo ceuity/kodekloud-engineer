@@ -706,6 +706,8 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
 
     기존에는 외부에서 앱서버에 직접적으로 접근이 가능했으나, 설정을 통해 로드밸런서를 통하여 통신을 하게 만드려고 한다. 따라서 각 앱서버에서 로드밸런서의 IP 주소의 접근만 허용하고 나머지는 거부하도록 설정해야 한다.
 
+    `iptables -L` 명령어로 현재 설정된 규칙을 확인해보면 기본적으로 REJECT rule이 설정되어 있기 때문에 ACCEPT rule을 REJECT rule 보다 상위에 설정해주어야 한다.
+
     ```bash
     # install package
     yum install -y iptables-services
@@ -715,8 +717,8 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     systemctl start iptables
 
     # rule setting
-    iptables -A INPUT -p tcp --destination-port 6300 -s 172.16.238.14 -j ACCEPT
-    iptables -A INPUT -p tcp --destination-port 6300 -j DROP
+    iptables -I INPUT 5 -p  tcp --dport 8084 -s 172.16.238.14 -j ACCEPT
+    iptables -A INPUT -p  tcp --dport 8084 -j DROP
 
     service iptables save
     systemctl restart iptables
