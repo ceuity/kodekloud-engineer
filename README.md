@@ -725,3 +725,13 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     ```
 
     위와 같이 설정한 후 해당 앱서버로 접근은 불가하지만 로드밸런서를 통한 접근은 가능한 것을 확인할 수 있다.
+    
+- Linux User Files
+
+    파일 계층 구조를 유지한 채로 특정 유저가 소유한 파일 및 폴더를 복사하는 문제
+
+    Linux Find Command와 비슷한 문제로, find의 flag를 이용하여 문제를 해결할 수 있다.
+
+    ```bash
+    find /home/usersdata/ -type f -user kirsty -exec cp --parents {} /media \;
+    ```
