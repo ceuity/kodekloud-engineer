@@ -735,3 +735,11 @@ Nautilus라는 가상의 회사에서 발생하는 System 문제들을 해결해
     ```bash
     find /home/usersdata/ -type f -user kirsty -exec cp --parents {} /media \;
     ```
+
+- Selinux Installation
+
+    Selinux 설치 후 환경설정 하는 문제
+
+    `yum install -y selinux*` 명령어로 관련 패키지를 모두 설치한다.
+
+    `sestatus` 명령어로 selinux의 status를 조회할 수 있다. 현재 status가 disabled로 되어있으므로, `/etc/selinux/config` 의 `SELINUX=disabled` 로 변경한 후 저장한다.
